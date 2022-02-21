@@ -1,0 +1,110 @@
+\documentclass[11pt]{article}
+
+\usepackage[inline]{enumitem}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[flushleft]{threeparttable}
+
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\sloppy
+
+\begin{document}
+
+\title{COMPSCI 762 2022 S1 Week 3 Tutorial 2 -- Decision Tree}
+\author{Luke Chang}
+
+\maketitle
+
+\medskip
+
+\section{Question 1}
+Answer the following questions:
+\begin{enumerate}
+    \item Explain how entropy is calculated.
+    \item What do Entropy $=1$ and Entropy $=0$ mean?
+    \item Explain what overfit and underfit are, and how they relate to decision tree pruning.
+    \item What is the effect of different size decision tree? If you train 4 decision trees on one dataset: 
+        \begin{enumerate*}
+            \item R0 -- the baseline rule, just using $Y$,
+            \item R1 -- just using 1 variable,
+            \item a pruned tree, and 
+            \item an unpruned tree.
+        \end{enumerate*}
+        What will be the difference in performance? Which are going to be more likely to underfit? Which are going to be more likely to overfit? 
+\end{enumerate}
+
+
+\section{Question 2}
+\subsection{Make a decision tree by hand}
+Give a decision tree for the following Boolean function using information gain and entropy:
+
+\begin{itemize}
+    \item $A \lor (B \land C)$
+\end{itemize}
+
+Answer this question by the following steps
+\begin{enumerate}
+    \item Create a table with all combinations;
+    \item Compute the root entropy without any prior;
+    \item Find the decision stump with the best score;
+    \item Split into two subsets based on the stump;
+    \item Keep finding the next decision stump until you obtain the complete decision tree.
+\end{enumerate}
+
+\subsection{Coding Practice}
+
+Answer the question above using the \textit{DecisionTreeClassifier} method from \textit{sklearn}.
+Plot the decision tree and compare it with your result.
+
+
+\section{Question 2}
+\subsection{Make a decision tree by hand}
+
+Give a decision tree for Table~\ref{tab1} using information gain and entropy:
+
+\begin{table}[ht!]
+    \centering
+    \caption{Verifying gemstones}
+    \begin{tabular}{lllll|l}
+        \toprule
+        Colour & Length & Size & Brightness & Shape & Class \\ 
+        \midrule
+        red & long & larger & bright & triangle & TRUE \\
+        red & long & small & bright & circle & FALSE \\
+        red & long & small & bright & triangle & TRUE \\
+        red & short & larger & dull & circle & FALSE \\
+        red & short & larger & bright & triangle & TRUE \\
+        blue & short & larger & bright & triangle & FALSE \\
+        \bottomrule
+    \end{tabular}
+    \label{tab1}
+\end{table}
+
+\subsection{Coding Practice}
+Answer the question above using the \textit{DecisionTreeClassifier} method from \textit{sklearn}.
+Plot the decision tree and compare it with your result.
+
+
+\section{Important Notes}
+\begin{itemize}
+    \item Check the demo before you start answering questions.
+    \item This is a group activity. You should divide the work into equal shares, and everyone should present their answer during the tutorial.
+    \item The marks are based on the results and your explanation. There is no mark for slides. You may choose whatever you think is suitable for presenting your solution, such as Jupyter Notebook or drawing on a whiteboard.
+    \item You must submit your solution before the tutorial. The deadline for submitting your answer is before Monday 8:00 am the same week you will present.
+\end{itemize}
+
+\end{document}
+\grid
+\grid
