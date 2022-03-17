@@ -1,0 +1,49 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage[inline]{enumitem}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[flushleft]{threeparttable}
+
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\sloppy
+
+\begin{document}
+
+\title{COMPSCI 762 2022 S1 Week 5 Questions -- Regression & Preprocessing}
+\author{Luke Chang}
+
+\maketitle
+
+\medskip
+
+\section{Question 1}
+Consider a time series data as the following:
+
+\begin{table}
+  \centering
+  \begin{tabular}{lllllllll}
+  X & 8 & 3  & 2 & 10 & 11 & 3 & 6 & 5  \\
+  Y & 4 & 12 & 1 & 12 & 9  & 4 & 9 & 6 
+  \end{tabular}
+\end{table}
+
+\begin{enumerate}
+  \item Use the least square method to determine the equation of line of best fit for the data. Then plot the line.
+  \item Given a new data point $X=9$, what is the predicted value of Y?
+\end{enumerate}
+
+\end{document}
