@@ -1,0 +1,89 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage[inline]{enumitem}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[flushleft]{threeparttable}
+
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\sloppy
+
+\begin{document}
+
+\title{COMPSCI 762 2022 S1 Week 6 Questions -- Regression \& Preprocessing (Part 2)}
+\author{Luke Chang}
+
+\maketitle
+
+\medskip
+
+\section{Question 1}
+\label{q1}
+
+You are interested in the used car market. The year of manufacture and the asking
+price for a particular car model are given as the following:
+
+\begin{table}[h]
+  \scriptsize
+  \centering
+  \begin{tabular}{c|llllllllllllllllllll}
+    Year  & 1985  & 1990 & 1991  & 2001 & 2004  & 2007  & 2007  & 2008  & 2008  & 2010  & 2013  & 2014 & 2015  & 2017  & 2018  \\
+    \hline
+    Price & 11800 & 6600 & 21800 & 4400 & 13000 & 14600 & 14700 & 15600 & 13200 & 17400 & 19200 & 8200 & 21500 & 27300 & 24700
+  \end{tabular}
+\end{table}
+
+\begin{enumerate}
+  \item Is there any outlier in the data? If it's, how do you determine outliers?
+  \item You realized cars that are in the same generation often asking for a similar price, so you deicide to use a binning method 
+        on \textbf{`year of manufacture'}.
+        What are the results of smooth by bin means, smooth by bin median, and smooth by bin boundaries?
+  \item If you deicide to use \textbf{`year of manufacture'} to predict
+        \textbf{`asking price'}, do you need to apply a data transformation technique
+        before building the regression model?
+        What are the available data transformation methods for this task, and what method do you think fit this scenario?
+  \item Build 2 regression models. The 1st one uses the original data. The 2nd one uses the preprocessed data.
+        You may apply any preprocessing methods you think fits.
+        Predict the asking price of a car manufactured in 2022. Which model do you think has better performance, and why?
+        (You can use \texttt{sklearn} or compute it by hand.)
+\end{enumerate}
+
+
+\section{Question 2}
+Continue using the data from Question~\ref{q1}.
+Car prices are not only based on manufacture years but also engine size. The engine size (in Liter) for each corresponding sample are given as the following:
+
+\begin{table}[h]
+  \scriptsize
+  \centering
+  \begin{tabular}{c|llllllllllllllllllll}
+    Engine size (L) & 3.0 & (NA) & 2.5 & (NA) & 2.0 & 3.0 & 2.5 & 2.0 & 3.0 & 2.0 & 2.0 & (NA) & 2.0 & 3.0 & 2.0 \\
+  \end{tabular}
+\end{table}
+
+\begin{enumerate}
+  \item What imputation methods are available in this case? How do you impute the missing values? 
+  \item Analyzing the correlations between features. Do you think \textbf{`engine size'} is an useful feature 
+    for predicting \textbf{`asking price'}?
+  \item Can you suggest any additional preprocessing method? (Hint: What do you think \texttt{`NA'} mean?)
+  \item If you deicide to use  both \textbf{`year of manufacture'} and \textbf{`engine size'} to predict 
+    \textbf{`asking price'}, what are the preprocessing methods you should apply before building the regression model?
+  \item We have 3 regression models so far. 2 from Question~\ref{q1} and we have just built another one.
+    How can you evaluate the performance between these models, and which one do you think has the best performance? 
+    (Hint: What Cross-Validation strategy should you apply on a small dataset?)
+\end{enumerate}
+
+\end{document}
