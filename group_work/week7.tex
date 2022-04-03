@@ -1,0 +1,133 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage[inline]{enumitem}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[flushleft]{threeparttable}
+
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\sloppy
+
+\begin{document}
+
+\title{COMPSCI 762 2022 S1 Week 7 Questions -- Bayesian Learning}
+\author{Luke Chang}
+
+\maketitle
+
+\medskip
+
+\section{Question 1}
+\label{q1}
+
+You come to Fiji for a holiday. 10 days later, you realise the weather forecast here isn't very accurate.
+Based on the information you gettered so far and today's weather report, you want to know ``Will it rain this afternoon?''
+
+\begin{table}[h]
+  \center
+  \small
+  \begin{tabular}{l|llll|l}
+    \textbf{Day} & \textbf{Outlook} ($O$) & \textbf{Temperature} ($T$) & \textbf{Humidity} ($H$) & \textbf{Wind} ($W$) & \textbf{Rain} ($R$) \\ \hline
+    1            & Sunny                  & Hot                        & High                    & Weak                & True                \\
+    2            & Sunny                  & Hot                        & High                    & Strong              & False               \\
+    3            & Overcast               & Hot                        & High                    & Weak                & True                \\
+    4            & Rain                   & Mild                       & High                    & Weak                & True                \\
+    5            & Rain                   & Cool                       & Normal                  & Weak                & True                \\
+    6            & Rain                   & Cool                       & Normal                  & Strong              & False               \\
+    7            & Overcast               & Cool                       & Normal                  & Strong              & False               \\
+    8            & Overcast               & Mild                       & High                    & Strong              & True                \\
+    9            & Sunny                  & Cool                       & Normal                  & Weak                & False               \\
+    10           & Rain                   & Mild                       & Normal                  & Weak                & False               \\ \hline
+    11           & Sunny                  & Mild                       & Normal                  & Strong              & ?
+  \end{tabular}
+\end{table}
+
+\noindent
+Answer the question using a Multinomial Naive Bayes Classifier. You should compute it by hand, and explain
+how you formulate the task and the steps for getting the solution.
+
+\section{Question 2}
+\label{q2}
+
+\subsection{Example of Bag of Words}
+{\em Bag of Words} (BoW) represents ad document as an unordered collection of words and their frequencies.
+Since there is no positional information, probabilities can be learned with less data.
+
+Let's consider the example as the following:
+
+\begin{center}
+  \textbf{John likes to watch movies. ``The Watch'' is his favorite movie.}
+\end{center}
+
+If we split the sentence above by space, we have:
+
+\texttt{
+  $\{$ "John": 1, "likes": 1, "to": 1, "watch": 1, "movies.": 1, "``The": 1, "Watch''": 1, "is": 1, "his": 1, "favorite": 1, "movie.": 1 $\}$
+}
+
+Can you identify the problem?
+We haven't consider the English grammar. For example:
+\begin{itemize}
+  \item Punctuation, e.g. \textit{``movies.''} should become \textit{``movies''}.
+  \item Plural, e.g., \textit{``movies''} and \textit{``movie''} are the same word.
+  \item Verbs in third-person singular, e.g., \textit{``likes''} and \textit{``like''} are the same word.
+  \item Capital letters, e.g., \textit{``Watch''} and \textit{``watch''} are the same word.
+  \item Stopping words, e.g., \textit{``a''} and \textit{``the''} provide no additional information for predicting the label.
+\end{itemize}
+
+\noindent
+Once we've taken care of the issues above, we have:
+
+\texttt{
+  $\{$ "john": 1, "like": 1, "watch": 2, "movie": 2, "his": 1, "favorite": 1 $\}$
+}
+
+
+\subsection{Naive Bayes on BoW Representation}
+Given 6 training observations in the format (sentence, label), answer the following questions by hand:
+
+\begin{table}[h]
+  \small
+  \begin{tabular}{c|l|c}
+    \textbf{Index} & \textbf{Sentence}                                                                     & \textbf{Label} \\ \hline
+    1              & Auckland is in the North Island of New Zealand.                                       & Auckland       \\
+    2              & Auckland has a large population.                                                      & Auckland       \\
+    3              & It is in the Auckland Region, governed by Auckland Council.                           & Auckland       \\
+    4              & Dunedin is in the South Island of New Zealand.                                        & Dunedin        \\
+    5              & Dunedin has the sixth highest population in New Zealand.                              & Dunedin        \\
+    6              & It was the largest city in New Zealand until the formation of the   Auckland Council. & Dunedin
+  \end{tabular}
+\end{table}
+
+\begin{enumerate}
+  \item What does the training data look like after  transforming to lower case, and removing the stop words and punctuations?
+  \item What is the vocabulary in this example (the overall set of words)?
+  \item What are the priors for Auckland (A) and Dunedin (D)? ($p(A)$ and $p(D)$)
+  \item What is the likelihood of seeing the word "Auckland" in a sentence labeled Auckland (A)? Dunedin (D)? ($p("Auckland"|A)$ and $p("Auckland"|D)$)
+  \item What is the likelihood of seeing the word "North" in a sentence labeled Auckland (A)? Dunedin (D)? ($p("North"|A)$ and $p("North"|D)$)
+  \item Since we multiply probabilities, and 0 encountered means the final probability will also be 0. Therefore,
+        \textbf{Laplace smoothing} is required when applying Naive Bayes on a BoW representation.
+        Using smoothing with constant 1, what is the likelihood of seeing the word "North" in a sentence labeled Auckland (A)? Dunedin (D)? ($p("North"|A)$ and $p("North"|D)$)
+  \item What label would Naive Bayes predict for the sentence: \textbf{"Auckland is in the north of the North Island"}?
+\end{enumerate}
+
+\vskip 1cm
+\noindent
+\textbf{Note:}
+You should solve both questions without computer aid.
+However, you may code in Python to check your solutions, but it is not part of the question.
+
+\end{document}
