@@ -1,0 +1,142 @@
+\documentclass[10pt]{article}
+
+\usepackage[english]{babel}
+\usepackage[linguistics]{forest}
+\usepackage[utf8]{inputenc}
+\usepackage{algorithmic}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{bookmark}
+\usepackage{caption}
+\usepackage{colortbl}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{lipsum}
+\usepackage{lmodern}
+\usepackage{mathptmx}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\usepackage{svg}
+\usepackage{xcolor}
+\usepackage{multicol}
+\usepackage{float}
+
+\usetikzlibrary{calc}
+
+\DeclareMathOperator*{\argmax}{argmax}
+
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\sloppy
+
+\begin{document}
+
+\title{COMPSCI 762 2022 S1 Week 4 Solution}
+\author{Luke Chang}
+
+\maketitle
+
+\medskip
+
+\section{Question 1}
+\label{q1}
+
+\begin{itemize}
+  \item Check Week 2 lecture slides from page 40 to 48.
+\end{itemize}
+
+\section{Question 2}
+\label{q2}
+
+\begin{itemize}
+  \item The weather is either Shower or Clear. This is a binary classification task. Let Shower be \textbf{P}ositive and Clear be \textbf{N}egative:
+    \begin{table}[H]
+      \centering
+      \small
+      \begin{tabular}{ccccc}
+      \textbf{}                        & \textbf{}                       & \multicolumn{2}{c}{\textbf{Predicted}}          &                \\
+                                      &                                 & \textbf{P}             & \textbf{N}             & \textbf{Total} \\ \cline{3-4}
+      \multirow{2}{*}{\textbf{Actual}} & \multicolumn{1}{c|}{\textbf{P}} & \multicolumn{1}{c|}{4} & \multicolumn{1}{c|}{1} & 5              \\ \cline{3-4}
+                                      & \multicolumn{1}{c|}{\textbf{N}} & \multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{2} & 5              \\ \cline{3-4}
+                                      & \textbf{Total}                  & 7                      & 3                      & \textbf{10}   
+      \end{tabular}
+    \end{table}
+  \item $\text{Acc.} = \frac{6}{10} = 0.6$
+  \item $\text{Precision (P)} = \frac{\text{TP}}{\text{TP}+ \text{FP}} = \frac{4}{4+3} \approx 0.571$
+  \item $\text{Recall (R)} = \frac{\text{TP}}{\text{TP}+ \text{FN}} = \frac{4}{4+1} \approx 0.8$
+  \item $F_1 = 2 \frac{P \times R}{P + R} = 2 \times \frac{0.571 \times 0.8}{0.571 + 0.8} \approx 0.667$
+  \item \textbf{Note: } A model with high Recall may also has high FPR (Type I Error).
+  \item ROC curve:
+    \begin{table}[H]
+      \centering
+      \small
+      \begin{tabular}{cc|cccccc}
+      \textbf{}      & \textbf{}           & \multicolumn{6}{l}{\textbf{Thresholds}}                                             \\
+      \textbf{Class} & \textbf{Prediction} & \textbf{0} & \textbf{0.2} & \textbf{0.4} & \textbf{0.6} & \textbf{0.8} & \textbf{1} \\ \hline
+      P              & 0.95                & 1          & 1            & 1            & 1            & 1            & 0          \\
+      N              & 0.85                & 1          & 1            & 1            & 1            & 1            & 0          \\
+      P              & 0.78                & 1          & 1            & 1            & 1            & 0            & 0          \\
+      P              & 0.66                & 1          & 1            & 1            & 1            & 0            & 0          \\
+      N              & 0.6                 & 1          & 1            & 1            & 1            & 0            & 0          \\
+      P              & 0.55                & 1          & 1            & 1            & 0            & 0            & 0          \\
+      N              & 0.53                & 1          & 1            & 1            & 0            & 0            & 0          \\
+      N              & 0.52                & 1          & 1            & 1            & 0            & 0            & 0          \\
+      N              & 0.51                & 1          & 1            & 1            & 0            & 0            & 0          \\
+      P              & 0.4                 & 1          & 1            & 1            & 0            & 0            & 0         
+      \end{tabular}
+    \end{table}
+  \item Counting TP and FP:
+    \begin{table}[H]
+      \centering
+      \small
+      \caption{Counting TP and FP}
+      \begin{tabular}{c|cccccc}
+      \textbf{Threshold} & \textbf{0} & \textbf{0.2} & \textbf{0.4} & \textbf{0.6} & \textbf{0.8} & \textbf{1} \\ \hline
+      \textbf{TPR}       & 1          & 1            & 1            & 0.60         & 0.2          & 0          \\
+      \textbf{FPR}       & 1          & 1            & 1            & 0.4          & 0.2          & 0         
+      \end{tabular}
+    \end{table}
+  \item Sort the results:
+    \begin{table}[H]
+      \centering
+      \small
+      \caption{Sort the results}
+      \begin{tabular}{c|cccccc}
+      \textbf{Threshold} & \textbf{1} & \textbf{0.8} & \textbf{0.6} & \textbf{0.4} & \textbf{0.2} & \textbf{0} \\ \hline
+      \textbf{TPR}       & 0          & 0.2            & 0.6            & 1         & 1         & 1          \\
+      \textbf{FPR}       & 0          & 0.2           & 0.4           & 1          & 1          & 1         
+      \end{tabular}
+    \end{table}
+  \item Final ROC plot:
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.4\columnwidth]{roc_curve_eg.pdf}
+    \end{figure}
+  \item AUC is the area under the ROC curve.
+\end{itemize}
+
+\section{Question 3}
+\label{q3}
+
+\begin{itemize}
+  \item After we find the optimal parameters for the model using CV, we have to train the model one more time with all data points. 
+  \item We don't want to do a train-test split. We want to use all the data.
+  \item The actual test set is hidden from us. When we submit the model, Kaggle will report a ranking score. However, we can not access the test set. 
+\end{itemize}
+
+\end{document}
