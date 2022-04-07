@@ -1,0 +1,171 @@
+\documentclass[10pt]{article}
+
+\usepackage[english]{babel}
+\usepackage[linguistics]{forest}
+\usepackage[utf8]{inputenc}
+\usepackage{algorithmic}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{bookmark}
+\usepackage{caption}
+\usepackage{colortbl}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{lipsum}
+\usepackage{lmodern}
+\usepackage{mathptmx}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\usepackage{svg}
+\usepackage{xcolor}
+\usepackage{multicol}
+
+\usetikzlibrary{calc}
+
+\DeclareMathOperator*{\argmax}{argmax}
+
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\sloppy
+
+\begin{document}
+
+\title{COMPSCI 762 2022 S1 Week 7 Questions -- Bayesian Learning}
+\author{Luke Chang}
+
+\maketitle
+
+\medskip
+
+\section{Question 1}
+\label{q1}
+
+\begin{itemize}
+    \item Attribute: \textit{Outlook} ($O$), \textit{Temperature} ($T$), \textit{Humidity} ($H$), \textit{Wind} ($W$);
+    \item Output: \textit{Rain} ($R$) - Binary classification problem;
+    \item The probability of a given output $r \in \{\text{True}, \text{False}\}$ is: $P(R=r| O,T,H,W)$
+    \item We want to predict the label with the highest probability: $R = \argmax_{r \in \{\text{T}, \text{F}\}} P(R=r| O,T,H,W)$
+    \item Bayes Theorem: $P(Y|X) = \frac{P(X|Y) P(Y)}{P(X)}$
+    \item How to rewrite this expression using Bayes Theorem?
+        \[ R = \argmax_{r \in \{\text{T}, \text{F}\}} P(R=r| O,T,H,W) \]
+        \[ R = \argmax_{r \in \{\text{T}, \text{F}\}} \frac{P(O,T,H,W| R=r) P(R=r)}{P(O,T,H,W)} \]
+    \item How can we simplify this problem?
+    \\ $P(Y|X)$ is proportional to: $P(Y|X) \propto P(X|Y) P(Y)$
+        \[ R = \argmax_{r \in \{\text{T}, \text{F}\}} P(O,T,H,W| R=r) P(R=r) \]
+    \item The marginal Probability $P(O,T,H,W)$ is omitted. If we want to know the probability, we can normalise all possible outcomes.
+    \item Calculate the Prior $P(R)$: 
+        $$P(R=\text{True}) = \frac{5}{10} = 0.5$$
+        $$P(R=\text{False}) = \frac{5}{10} = 0.5$$
+    \item Calculate the Likelihood:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item $P(O=\text{Sunny} | R=\text{T}) = \frac{1}{5}$
+                \item $P(O=\text{Overcast} | R=\text{T}) = \frac{2}{5}$
+                \item $P(O=\text{Rain} | R=\text{T}) = \frac{2}{5}$
+                \item $P(T=\text{Hot} | R=\text{T}) = \frac{2}{5}$
+                \item $P(T=\text{Mild} | R=\text{T}) = \frac{2}{5}$
+                \item $P(T=\text{Cool} | R=\text{T}) = \frac{1}{5}$
+                \item $P(H=\text{High} | R=\text{T}) = \frac{4}{5}$
+                \item $P(H=\text{Normal} | R=\text{T}) = \frac{1}{5}$
+                \item $P(T=\text{Strong} | R=\text{T}) = \frac{1}{5}$
+                \item $P(T=\text{Weak} | R=\text{T}) = \frac{4}{5}$
+            \end{itemize}
+        \end{multicols}
+    \item Let's predict:
+        \begin{table}[h]
+            \centering
+            \small
+            \begin{tabular}{l|llll|l}
+            \textbf{Day} & \textbf{Outlook} ($O$) & \textbf{Temperature} ($T$) & \textbf{Humidity} ($H$) & \textbf{Wind} ($W$) & \textbf{Rain} ($R$) \\ \hline
+            11           & Sunny            & Mild                 & Normal            & Strong        & ?            
+            \end{tabular}
+        \end{table}
+
+        \[ R = \argmax_{r \in \{\text{T}, \text{F}\}} P(O| R=r)P(T| R=r)P(H| R=r)P(W| R=r) P(R=r) \]
+
+        \begin{align*}
+            P(R=\text{T}|O,T,H,W) & \propto P(O=\text{S}| R=\text{T})P(T=\text{M}| R=\text{T})P(H=\text{N}| R=\text{T})P(W=\text{S}| R=\text{T}) P(R=\text{T}) \\
+            & \propto \frac{1}{5} \cdot \frac{2}{5} \cdot \frac{1}{5} \cdot \frac{1}{5} = 0.0032\\
+        \end{align*}
+    
+        \begin{align*}
+            P(R=\text{F}|O,T,H,W) & \propto P(O=\text{S}| R=\text{F})P(T=\text{M}| R=\text{F})P(H=\text{N}| R=\text{F})P(W=\text{S}| R=\text{F}) P(R=\text{F}) \\
+            & \propto \frac{2}{5} \cdot \frac{1}{5} \cdot \frac{4}{5} \cdot \frac{3}{5} = 0.0384\\
+        \end{align*}
+
+        \begin{align*}
+            P(R=\text{T}|O,T,H,W) & = \frac{0.0032}{P(O,T,H,W)}\\
+            P(R=\text{F}|O,T,H,W) & = \frac{0.0384}{P(O,T,H,W)}\\
+            P(R=\text{T}|O,T,H,W) & = \frac{0.0032}{0.0032 + 0.0384} = 0.08\\
+            P(R=\text{F}|O,T,H,W) & = \frac{0.0384}{0.0032 + 0.0384} = 0.92\\
+        \end{align*}
+    \item Given the information, there is $92\%$ to not rain.
+\end{itemize}
+
+\section{Question 2}
+\label{q2}
+
+\begin{itemize}
+    \item What does the training data look like after transforming to lower case, and removing the stop words and punctuations?
+        \begin{table}[h]
+            \centering
+            \small
+            \begin{tabular}{c|l|c|c}
+            \textbf{Index} & \textbf{Sentence}                                   & \textbf{Word Count} & \textbf{Label} \\ \hline
+            1              & auckland north island new zealand                   & 5                   & Auckland       \\
+            2              & auckland large population                           & 3                   & Auckland       \\
+            3              & auckland region governed auckland concil            & 5                   & Auckland       \\
+            4              & dunedin south island new zealand                    & 5                   & Dunedin        \\
+            5              & dunedin sixth highest population new zealand        & 6                   & Dunedin        \\
+            6              & largest city new zealand formation auckland council & 7                   & Dunedin       
+            \end{tabular}
+        \end{table}
+    \item What is the vocabulary in this example (the overall set of words)?
+        \begin{center}
+            $\{$ region, governed, highest, auckland, sixth, population, city, dunedin, formation, large, population, largest, south, council, island, north, zealand, new $\}$
+        \end{center}
+    \item Priors:
+        $$p(A) = \frac{3}{6} = 0.5$$
+        $$p(D) = \frac{3}{6} = 0.5$$
+    \item Likelihood of seeing the word ``auckland'':
+        $$p(\text{``auckland''}|A) = \frac{4}{13}$$
+        $$p(\text{``auckland''}|D) = \frac{1}{18}$$
+    \item Likelihood of seeing the word ``north'':
+       $$p(\text{``north''}|A) = \frac{1}{13}$$
+       $$p(\text{``north''}|D) = \frac{0}{18} = 0$$
+    \item The training data has 13 words in total labeled with "A". Smoothing adds 1 to the total count per word in the vocab, so adds 18. Our total count is $13 + 18 = 31$. 4 words labeled "A" are the word ``auckland'', + 1 from smoothing = 5.
+        $$p(\text{``auckland''}|A) = \frac{5}{31}$$
+    \item The training data has 18 words in total labeled with "D". We add 18 from smoothing, so the total count = 36. 1 word labeled "D" is the word ``auckland'', + 1 from smoothing = 2.
+        $$p(\text{``auckland''}|D) = \frac{2}{36}$$
+    \item For $p(\text{``north''}|A)$, and $p(\text{``north''}|D)$, the training data has 13 words in total labeled with ``A''. Smoothing adds 1 to the total count per word in the vocab, so adds 18. Our total count is $13 + 18 = 31$. 1 words labeled ``A'' are the word ``north'', + 1 from smoothing = 2.
+        $$p(\text{``north''}|A) = \frac{2}{31}$$
+        $$p(\text{``north''}|D) = \frac{1}{36}$$
+    \item Predict ``Auckland is in the north of the North Island''
+    \begin{itemize}
+        \item The BoW representation of the sentence is $\{$``auckland'': 1, ``north'': 2, ``island'': 1$\}$
+        \item For label $v$, the posterior probability is given by:
+        $$p(\text{``auckland''}|v)\times p(\text{``north''}|v) \times p(\text{``north''}|v) \times p(\text{``island''}|v) \times p(v)$$
+        $$=p(\text{``auckland''}|v)^1\times p(\text{``north''}|v)^2 \times p(\text{``island''}|v)^1 \times p(v)$$
+        \item For $v=\text{Auckland}$: $\frac{5}{31}\frac{2}{31}^2\frac{2}{31}\times 0.5 = 0.00002$
+        \item For $v=\text{Dunedin}$: $\frac{1}{36}\frac{1}{36}^2\frac{2}{36}\times 0.5 = 0.0000006$
+        \item The maximum posterior probability is for $v=\text{Auckland}$, so we label the observations as Auckland.
+    \end{itemize}
+\end{itemize}
+
+
+\end{document}
