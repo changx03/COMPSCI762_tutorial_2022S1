@@ -1,0 +1,107 @@
+\documentclass[10pt]{article}
+
+\usepackage[english]{babel}
+\usepackage[linguistics]{forest}
+\usepackage[utf8]{inputenc}
+\usepackage{algorithmic}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{bookmark}
+\usepackage{caption}
+\usepackage{colortbl}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{lipsum}
+\usepackage{lmodern}
+\usepackage{mathptmx}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\usepackage{svg}
+\usepackage{xcolor}
+\usepackage{multicol}
+
+\usetikzlibrary{calc}
+
+\DeclareMathOperator*{\argmax}{argmax}
+
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\sloppy
+
+\begin{document}
+
+\title{COMPSCI 762 2022 S1 Week 6 Solution}
+\author{Luke Chang}
+
+\maketitle
+
+\medskip
+
+\section{Question 1}
+\label{q1}
+
+\begin{itemize}
+    \item Apply binning with mean value to split the data into 3 bins based on ``Year'':
+    \begin{table}[h]
+        \small
+        \centering
+        \begin{tabular}{c|c|c|c}
+        \textbf{Bin} & \textbf{Mean (Year, Price)} & \textbf{SD (Year, Price)} & \textbf{2SD (Year, Price)}\\ \hline
+        1 & 1994, 11520 & 8.0, 6761.1 & 16.0, 13522.2 \\
+        2 & 2008, 15100 & 1.2, 1546.0 &  2.4, 3092.0 \\
+        3 & 2015, 20180 & 2.1, 7371.4 &  4.2, 14742.8 \\
+        \end{tabular}
+    \end{table}
+    \item Absolute error:
+    \begin{table}[h]
+        \scriptsize
+        \centering
+        \begin{tabular}{c|llllllllllllllllllll}
+          Year  &  9.0 &     4.0 &      3.0 &     7.0 &    10.0 &    1.0 &    1.0 &    0.0 &     0.0 &     2.0 &    2.0 &      1.0 &     0.0 &     2.0 &     3.0 \\
+          \hline
+          Price & 280.0 &  4920.0 &  10280.0 &  7120.0 &  1480.0 &  500.0 &  400.0 &  500.0 &  1900.0 &  2300.0 &  980.0 &  11980.0 &  1320.0 &  7120.0 &  4520.0 \\
+        \end{tabular}
+      \end{table}
+    \item Based on 95\% confidence interval (2$\sigma$), there is no outlier in the data.
+    \item The car with lowest price (\$4400) seems way cheaper than others. Why isn't it an outlier?\\
+        \textbf{Note:} 
+        \begin{itemize}
+            \item There are multiple ways determine an outlier. We have to based on a statistical test, not an arbitrary guess. If the criteria we have defined is 95\% confidence interval, then none of the data point is outlier.
+            \item The 1st bin contains older vehicles, and we observe it fluctuates more than other bins. 
+        \end{itemize}
+    \item If we model the data using least square method ($y=ax+b$), linear transformation will not alter the value of gradient ($a$). It only changes the bias ($b$). 
+    \item $f(x) = 313.1 x - 612397.6$, thus $f(2022) = 20690.6$;
+\end{itemize}
+
+\section{Question 2}
+\label{q2}
+
+\begin{itemize}
+    \item Available imputation methods: Median, mode.
+    \item ``Engine size'' is discrete value. We shouldn't use mean.
+    \item KNN imputation is not suitable in this case, unless we can prove ``Year'' is correlated to ``Engine size''.
+    \item If the target of the regression model is ``Price'', we cannot use ``Price'' in imputation, because we will not have the target value at inference time.
+    \item Median and mode both give us $2.0$.
+    \item Spearman rank correlation in \texttt{pandas.DataFrame.corr} can be used.
+    \item Mean price for all $15600$; Mean value exclude NA $17900$; Mean value for NA only $6400$. However, the sample size is too small to consider SD.
+    \item Suggestion: Adding additional feature of ``Unknown engine size''.
+    \item Ground truth: Engine size is randomly generated, but unknown engine size indicates it is a wrecked car.
+    \item Blindly including extra features may not improve the performance of the model. 
+\end{itemize}
+
+\end{document}
