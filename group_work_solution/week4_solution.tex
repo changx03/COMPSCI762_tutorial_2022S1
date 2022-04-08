@@ -58,6 +58,9 @@
 
 \begin{itemize}
   \item Check Week 2 lecture slides from page 40 to 48.
+  \item When the number of samples is small, we should consider leave-one-out.
+  \item When the number of samples is very large, we must consider the cost of training, 
+  and how well the model scale with larger data. 
 \end{itemize}
 
 \section{Question 2}
@@ -127,7 +130,7 @@
       \centering
       \includegraphics[width=0.4\columnwidth]{roc_curve_eg.pdf}
     \end{figure}
-  \item AUC is the area under the ROC curve.
+  \item AUC is the area under the ROC curve. We can use {\em Riemann sum} to compute it.
 \end{itemize}
 
 \section{Question 3}
@@ -135,8 +138,10 @@
 
 \begin{itemize}
   \item After we find the optimal parameters for the model using CV, we have to train the model one more time with all data points. 
-  \item We don't want to do a train-test split. We want to use all the data.
+  \item Since we have already selected the model, we don't need to do a train-test split. We want to use all the data to train our model before shipping it.
   \item The actual test set is hidden from us. When we submit the model, Kaggle will report a ranking score. However, we can not access the test set. 
+  \item \textbf{Note: } Decision Tree does not scale well with very large data set. 
+  We will learn neural network later in this course, which scales better with larger data set.
 \end{itemize}
 
 \end{document}

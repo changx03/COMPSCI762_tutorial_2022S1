@@ -57,10 +57,10 @@
 
 \begin{itemize}
   \item The maximum entropy is not 1 unless it is binary. ``Entropy is 1'' does not mean anything on data with multiple classes.
-  \item Decision stump (R1) provides a non-trivial baseline. Later this course, we will learn that using multiple R1 models can build high performance ensemble models.
+  \item Decision stump (R1) provides a non-trivial baseline. Later this course, we will learn that using multiple R1 models to build high performance ensemble models.
   \item Maximum entropy indicates the outcome is not better than random guess.
   \item 0 is the minimum entropy. It indicates you are 100\% certain about the outcome.
-  \item Entropy is not a probability, it does not bound between $[0, 1]$.
+  \item Entropy is not a probability, the range is $[0, \infty)$. It does not bound between $[0, 1]$.
 \end{itemize}
 
 \section{Question 2}
@@ -75,12 +75,24 @@
 \label{q3}
 
 \begin{itemize}
-  \item Without prior condition, 6 data points, 3 positive and 3 negative. This is a binary case, where the outcome is no better than random guess. Therefore, we can write $H(Y) = 1$ immediately without any computation. 
-  \item Let consider the formula of {\em Information Gain} (IG), it is a non-negative decreasing value. 
+  \item The tree you draw by hand should match the plot from \texttt{sklearn}.
+  \item Without prior condition (not looking at any attribute). There are 6 data points. 
+  3 of them are positive, and others are 3 negative. 
+  This is a binary case, and the outcome is 50:50. 
+  Therefore, we can write $H(Y) = 1$ immediately without any computation (Max entropy). 
+  \item Let consider the formula of {\em Information Gain} (IG), it is a non-negative decreasing. 
   \item The maximum IG cannot go above the parent entropy.
-  \item Recall 0 is the minimum entropy, and it indicates you are 100\% certain about the outcome.
-  \item By combining two bullet points above, we know the maximum IG appears when we choose the attribute with 0 entropy (all cases combine).
-  \item After we found ``Shape'' leads to maximum IG at the decision stump, we realize $H(Y|\text{Color}=\text{red}, \text{Shape}=\text{triangle})$ and $H(Y|\text{Color}=\text{blue}, \text{Shape}=\text{triangle})$ both have 0 entropy (the output labels are 100\% certain), we can condition on ``Color'' without searching other attributes. Other attributes can do no better than ``Color''. Moreover, because we are 100\% the output when we condition on ``Color'', this is the end of the decision tree. There will be no more leaf node.
+  \item Recall, 0 is the minimum entropy, and it indicates you are 100\% certain about the outcome.
+  \item By combining two bullet points above, we know the maximum IG appears when we choose the attribute with 0 entropy 
+  (all cases combine).
+  \item After we found ``Shape'' maximize IG at the decision stump, we realize 
+  $H(Y|\text{Color}=\text{red}, \text{Shape}=\text{triangle})$ and 
+  $H(Y|\text{Color}=\text{blue}, \text{Shape}=\text{triangle})$ both have 0 entropy 
+  (the output labels are 100\% certain).
+  Thus, we can condition on ``Color'' without computing entropy for other attributes. 
+  Other attributes can do no better than ``Color''. 
+  Moreover, because we are 100\% the output when we condition on ``Color'', 
+  this is the end of the decision tree. There will be no more leaf node.
 \end{itemize}
 
 \end{document}
