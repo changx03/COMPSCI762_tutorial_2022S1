@@ -33,34 +33,37 @@
 \section{Question 1}
 \label{q1}
 
-There are four main activation functions we have discussed in the class:
-step function, linear function, sigmoid function, and rectified linear function.
-For each of them explain what their pros and cons are and what kind of models they can learn.
-
-\section{Question 2}
-\label{q2}
-
-In neural networks, we talked about getting stuck in a local minima. If you got stuck
-in a local minima would that be overfitting or underfitting or could it be either?
-
-\section{Question 3}
-\label{q3}
-
-If you have a fully connected neural network with 3 features, 1 hidden layer with 2 nodes,
-and an output layer with 5 nodes.
+If you have a fully connected neural network with 4 features, 1 hidden layer with 4 nodes,
+and an output layer with 3 nodes.
 Recall a weight is associated with an edge between two nodes.
 
 \begin{enumerate}
   \item How many weights will you learn?
   \item What will be the form of the hypothesis returned by this neural network algorithm?
-  \item If you add a second hidden layer with 2 nodes, how many more numbers will there be in your hypothesis?
+  \item If you add a second hidden layer with 4 nodes, how many more numbers will there be in your hypothesis?
   \item What is the size of the set of all possible hypotheses?
   \item What activation function will you use on each layer? What loss function will you use? Why do you choose them?
 \end{enumerate}
 
-\vspace{18pt}
+\vspace{11pt}
 \noindent
 \textbf{Note:}\\
-The answer for each question should be 100 words or less. (Question 3 has 5 questions.) You may include figures.
+The answer for each question should be 100 words or less. You may include figures.
+
+\section{Question 2}
+\label{q2}
+
+The LeNet-5 model from Yann LeCun's paper ``Gradient-based learning applied to document recognition'' (1998) 
+\url{https://axon.cs.byu.edu/~martinez/classes/678/Papers/Convolution\_nets.pdf} is one of the pioneer in convolutional neural networks for image classification.
+
+You task is to implement LeNet-5 using PyTorch or Tensorflow, and train it on the MNIST dataset \url{http://yann.lecun.com/exdb/mnist/}. (MNIST is a widely used benchmark dataset. Both packages provide built-in methods to download it, so you don't need to download it from the link in this file.)
+
+Note that newer activation function such as ReLU wasn't develop at that time. Feel free to update the model, and use
+more efficient activation functions.
+
+Both PyTorch and Tensorflow can implement LeNet-5 in few lines of code.
+There are many online resources on implementing LeNet-5. Feel free to lookup, if you get stuck.
+
+Your task is to explain the neural network architecture and how you implemented it. 
 
 \end{document}
