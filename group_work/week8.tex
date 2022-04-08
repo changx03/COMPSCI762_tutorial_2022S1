@@ -1,0 +1,66 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage[inline]{enumitem}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[flushleft]{threeparttable}
+
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\sloppy
+
+\begin{document}
+
+\title{COMPSCI 762 2022 S1 Week 8 Questions -- Artificial Neural Networks}
+\author{Luke Chang}
+
+\maketitle
+
+\medskip
+
+\section{Question 1}
+\label{q1}
+
+There are four main activation functions we have discussed in the class:
+step function, linear function, sigmoid function, and rectified linear function.
+For each of them explain what their pros and cons are and what kind of models they can learn.
+
+\section{Question 2}
+\label{q2}
+
+In neural networks, we talked about getting stuck in a local minima. If you got stuck
+in a local minima would that be overfitting or underfitting or could it be either?
+
+\section{Question 3}
+\label{q3}
+
+If you have a fully connected neural network with 3 features, 1 hidden layer with 2 nodes,
+and an output layer with 5 nodes.
+Recall a weight is associated with an edge between two nodes.
+
+\begin{enumerate}
+  \item How many weights will you learn?
+  \item What will be the form of the hypothesis returned by this neural network algorithm?
+  \item If you add a second hidden layer with 2 nodes, how many more numbers will there be in your hypothesis?
+  \item What is the size of the set of all possible hypotheses?
+  \item What activation function will you use on each layer? What loss function will you use? Why do you choose them?
+\end{enumerate}
+
+\vspace{18pt}
+\noindent
+\textbf{Note:}\\
+The answer for each question should be 100 words or less. (Question 3 has 5 questions.) You may include figures.
+
+\end{document}
