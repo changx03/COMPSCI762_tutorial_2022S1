@@ -1,0 +1,90 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage[inline]{enumitem}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[flushleft]{threeparttable}
+
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\sloppy
+
+\begin{document}
+
+\title{COMPSCI 762 2022 S1 Week 8 Questions -- Artificial Neural Networks}
+\author{Luke Chang}
+
+\maketitle
+
+\medskip
+
+\section{Question 1}
+\label{q1}
+Designing artificial neural network models to solve boolean functions:
+
+\begin{enumerate}
+    \item Design a two-point preceptron (an artificial neuron) that implements the boolean function $A \land \neg B$.
+    \item Design a two-layer network of perceptrons that implements $A \oplus B$ (XOR logic).
+\end{enumerate}
+
+
+\section{Question 2}
+\label{q2}
+
+Table \ref{tab1} consists of training data from an employee database.
+The data have been generalized.
+For example, “31 . . . 35” for age represents the age range of 31 to 35.
+For given row entry, count represents the number of data tuples having the
+values for department, status, age and salary given in that row. 
+Let \textit{Status} be the class-label attribute.
+
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{rlllr|c}
+        \toprule
+        Index & Department & Age         & Salary        & Count & Status \\
+        \midrule
+        1     & sales      & 31 . . . 35 & 46K . . . 50K & 30    & senior \\
+        2     & sales      & 26 . . . 30 & 26K . . . 30K & 40    & junior \\
+        3     & sales      & 31 . . . 35 & 31K . . . 35K & 40    & junior \\
+        4     & systems    & 21 . . . 25 & 46K . . . 50K & 20    & junior \\
+        5     & systems    & 31 . . . 35 & 66K . . . 70K & 5     & senior \\
+        6     & systems    & 26 . . . 30 & 46K . . . 50K & 3     & junior \\
+        7     & systems    & 41 . . . 45 & 66K . . . 70K & 3     & senior \\
+        8     & marketing  & 36 . . . 40 & 46K . . . 50K & 10    & senior \\
+        9     & marketing  & 31 . . . 35 & 41K . . . 45K & 4     & junior \\
+        10    & secretary  & 46 . . . 50 & 36K . . . 40K & 4     & senior \\
+        11    & secretary  & 26 . . . 30 & 26K . . . 30K & 6     & junior \\
+        \bottomrule
+    \end{tabular}
+    \caption{Employee database}
+    \label{tab1}
+\end{table}
+
+\begin{enumerate}
+    \item Design a multilayer feed-forward neural network for the given data. 
+        Label the nodes in the input and output layers.
+        \label{q2.1}
+    \item  Using the multilayer feed-forward neural network obtained in (\ref{q2.1}), show the weight values after one
+    iteration of the back-propagation algorithm, given the training instance “(sales, senior, 31. . . 35,
+    46K,. . . 50K)”. Indicate your initial weight values and biases and the learning rate used.
+    
+\end{enumerate}
+
+\textbf{Note:}\\
+All questions should be solved by hand. You may use any plotting tools/packages,
+but you should use neither PyTorch nor Tensorflow to build neural network models.
+\end{document}
