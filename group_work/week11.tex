@@ -1,0 +1,58 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage[inline]{enumitem}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[flushleft]{threeparttable}
+\usepackage{amsmath}
+
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\sloppy
+
+\begin{document}
+
+\title{COMPSCI 762 2022 S1 Week 11 Questions}
+\author{Luke Chang}
+
+\maketitle
+
+\medskip
+
+\section{Question 1}
+\label{q1}
+Answer the following questions regard to ensemble methods. The explanation for each question should be 200 words or less.
+Using figures to illustrate your solution is highly encouraged.
+
+\begin{enumerate}
+    \item What are the two key factors an ensemble must have?
+    \item Bagging changes two thins in a dataset. What are they?
+    \item What is the main differences between {\em random forest} (RF), bagging and XGBoost?
+    \item Which of the ``methods for constructing ensembles'' do RF and XGBoost use?
+    \item Will variable importance in RF always give you the the ``correct'' answer? Why?
+    \item Between RF and bagging, what will the effect be of having a data set with a larger or smaller number of instances?
+    \item Between RF and bagging, what will the effect be of having a data set with a larger or smaller number of features?
+\end{enumerate}
+
+\section{Question 2}
+\label{q2}
+
+\textit{sklearn} includes a collection of commonly used machine learning methods, including ensembles. 
+You task is to benchmark decision tree (can be pruned or unpruned), SVM, RF, bagging, AdaBoost and XGBoost on the breast cancer wisconsin dataset (\textit{sklearn.datasets.load\_breast\_cancer()}). 
+Analyze your results.
+You need to install \textit{XGBoost} separately. The installation guide can be found here: 
+\href{https://xgboost.readthedocs.io/en/stable/install.html#python}{https://xgboost.readthedocs.io/en/stable/install.html\#python}
+
+\end{document}
