@@ -1,0 +1,113 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage[inline]{enumitem}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[flushleft]{threeparttable}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\sloppy
+
+\begin{document}
+
+\title{COMPSCI 762 2022 S1 Week 10 Questions}
+\author{Luke Chang}
+
+\maketitle
+
+\medskip
+
+\section{Question 1 - K-Nearest Neighbour (KNN)}
+\label{q1}
+
+\subsection{}
+Let's consider a 2-dimension case, where each instance has two features -- x and y, as show in Fig.~\ref{fig1.1}.
+We have two data point $[0, 0]$ and $[1, 1]$, the Euclidean distance between them is $\sqrt{2}$ and the Manhattan distance is 2.
+
+\begin{figure}[h]
+  \centering
+  \small
+  \includegraphics[width=0.3\textwidth]{imgs/distance_plot.pdf}
+  \caption{Blue indicates the Euclidean distance between data point $[0, 0]$ and $[1, 1]$, and Red represents the Manhattan  distance of the same data points.}
+  \label{fig1.1}
+\end{figure}
+
+Next, let's apply two distance metrics in a sernario where we try to find two similar restaurants based on customer's satisfaction and cost, as shown in Table~\ref{tab1.1}.
+The distance between a [Neutral, Neutral] restaurant and a [Neutral, Very expensive] restaurant is same 
+as [Neutral, Neutral] and [Happy, Expensive] in Manhattan distance.
+
+However, in Euclidean distance, [Neutral, Neutral] and [Happy, Expensive] have a shorter distance than 
+[Neutral, Neutral] and [Neutral, Very expensive]. In this case, it makes sense to use Euclidean distance.
+
+Manhattan distance works better in higher dimension than Euclidean distance.
+
+Jaccard distance is often used for boolean vectors.
+
+For a data set with mixed feature types, a transformation is required, e.g PCA.
+
+\subsection{}
+$k=1$ promotes more complicated decision boundary. Thus, it tends to overfit the data.
+However, it is very useful in high dimension cases and large data sets, where the 
+distance is difficult to compute, or sorting data is very computational expensive.
+For example, finding the closest instance is a much easier task than finding the top 10 nearest point.
+
+
+\begin{table}[h]
+  \centering
+  \small
+  \caption{Two features are encoded as integer values.}
+  \begin{tabular}{c|ll}
+    \toprule
+    Encoded value & Satisfaction (F1) & Cost (F2) \\
+    \midrule
+    0 & Very unhappy & Very cheap \\
+    1 & Unhappy & Cheap \\
+    2 & Neutral & Neutral \\
+    3 & Happy & Expensive\\
+    4 & Very happy & Very expensive \\
+    \bottomrule
+  \end{tabular}
+  \label{tab1.1}
+\end{table}
+
+
+\section{Question 2 - K-Nearest Neighbour (KNN)}
+\label{q2}
+
+\begin{itemize}
+  \item Normalize your data. Distance metrics are extremely sensitive to unormalized data. 
+  In this case, F2 has 100 times of the weight than F1 and F3.
+  \item Manhattan distance is an ok choice here. However, be aware of we are dealing with mixed data here. 
+  The optimal solution is that we transform the data, and then measure the distance on the transformed space.
+  \item There is a caveat in applying kNN on the training data. Since every instance is already included in the training set,
+  the the nearest neighbour is alway the instance itself. So in a 1NN model, the training set will always return 100\% accuracy. 
+  To compute the true training set accuracy, we have to use $k+1$, and remove the instance itself (nearest neighbour) from the queue. 
+\end{itemize}
+
+
+\section{Question 3 - Support Vector Machine (SVM)}
+\label{q3}
+\begin{enumerate}
+  \item Tuning C is no different to tuning other hyper-parameters we have used before. The standard procedure of a cross-validation is the way to go. 
+  Note that C is expected to be tuned as a coutinous log-uniform random variable, instead of linear, e.g., [0.01, 0.1, 1, 10, 100].
+  Here is the demo code: \href{https://scikit-learn.org/stable/modules/grid_search.html}{https://scikit-learn.org/stable/modules/grid\_search.html}
+  \item The rest of solutions are in the supplementary slides.
+\end{enumerate}
+
+
+\end{document}
