@@ -1,0 +1,71 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage[inline]{enumitem}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[flushleft]{threeparttable}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\sloppy
+
+\begin{document}
+
+\title{COMPSCI 762 2022 S1 Week 12 Questions}
+\author{Luke Chang}
+
+\maketitle
+
+\medskip
+
+\section{Question 1 -- Clustering}
+\label{q1}
+
+\begin{figure}[h]
+    \centering
+    \small
+    \caption{A data set has 8 instances, from A1 to A8. The Euclidean distances between every two instances are given as the following:}
+    \includegraphics[width=0.5\textwidth]{k-mean_review_q1.png}
+    \label{fig1.1}
+\end{figure}
+
+Use the data in Figure~\ref{fig1.1} to answer the questions below:
+\begin{enumerate}
+    \item Suppose that the initial seeds (centers of each cluster) are \textbf{A1}, \textbf{A4} and \textbf{A7}. 
+    Run the k-means algorithm for 1 epoch only. At the end of this epoch show:
+    \begin{itemize}
+        \item The new clusters (i.e. the examples belonging to each cluster)
+        \item The centers of the new clusters
+    \end{itemize}
+    \item Use single-linkage (MIN) agglomerative clustering to group the data. Show the dendrogram.
+\end{enumerate}
+
+
+\section{Question 2 -- Ooutlier/Anomaly Detection}
+\label{q2}
+
+\begin{enumerate}
+    \item What are the three types of anomaly? Give an example for each type.
+    \item You are given the following list of 2D data points:
+        \[[1; 1]; [1; 2]; [2; 2]; [2; 1]; [3; 3]; [2; 5]; [2; 3]\]
+        If you had to select one point to be anomalous, how to use Manhattan distance to 
+        determine the outlier. Explain the anomaly detection technique.
+    \item Consider a set of points (0,0), (1,0), (0,1), (3,0). 
+    Calculate the {\em Local Outlier Factor} (LOF) score for the points using Manhattan distance and $k$ is 2.
+\end{enumerate}
+
+\end{document}
