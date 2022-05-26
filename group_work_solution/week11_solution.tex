@@ -1,0 +1,97 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage[inline]{enumitem}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[flushleft]{threeparttable}
+\usepackage{amsmath}
+\usepackage{xcolor}
+
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\sloppy
+
+\begin{document}
+
+\title{COMPSCI 762 2022 S1 Week 11 Questions}
+\author{Luke Chang}
+
+\maketitle
+
+\medskip
+
+\section{Question 1}
+\label{q1}
+Answer the following questions regard to ensemble methods. The explanation for each question should be 200 words or less.
+Using figures to illustrate your solution is highly encouraged.
+
+\begin{enumerate}
+    \item What are the two key factors an ensemble must have?
+
+    {\color{blue}
+        \begin{enumerate}
+            \item Each model must perform better than random guess;
+            \item Must be uncorrelated;
+        \end{enumerate}
+    }
+    \item Bagging changes two thins in a dataset. What are they?
+
+    {\color{blue}
+        \begin{enumerate}
+            \item The choice of data instances;
+            \item The distribution over them (with replacement);
+        \end{enumerate}
+    }
+    \item What is the main differences between {\em random forest} (RF), bagging and XGBoost?
+
+    {\color{blue}
+        XG Boost chooses without replacement so does not change the distribution of the dataset;
+        Also Boosting will have to use a smaller training set by definition; 
+        RF uses democratic voting and XG Boost uses weighted voting.
+    }
+    \item Which of the ``methods for constructing ensembles'' do RF and XGBoost use?
+
+    {\color{blue}
+        They are both manipulating the training set, manipulating the input features (columns), injecting Randomness.
+    }
+    \item Will variable importance in RF always give you the the ``correct'' answer? Why?
+
+    {\color{blue}
+    No, because if you have correlated attributes Random forest will say neither are important even if they are the most important.\\
+    This is because it randomizes the variables one at a time, thereby relying on the correlated variable when each is randomized.\\
+    \textbf{Example:}\\
+    Given a logic Function: $A \lor (B \land C)$ - B and C are correlated. If we train a tree with only A and B, or A and C, we will not have the correct logic.
+    }
+    \item Between RF and bagging, what will the effect be of having a data set with a larger or smaller number of instances?
+
+    {\color{blue}
+        The effect on bagging and random forest will be the same.
+        They both sample the instance space with replacement.
+    }
+    \item Between RF and bagging, what will the effect be of having a data set with a larger or smaller number of features?
+
+    {\color{blue}
+    Since random forests sample the features, you might get better results when there are a lot of
+    features because you got rid of a lot of noise, but with a data set with only a few features you
+    might do worse because you are not left with enough features to make a good classifier.
+    }
+\end{enumerate}
+
+\section{Question 2}
+\label{q2}
+
+No standard solution for Question 2. Any reasonable analysis is a valid solution.
+
+\end{document}
