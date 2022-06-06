@@ -1,93 +1,90 @@
-UPI,Score
-ache706,2
-ache934,2
-adha594,1
-agho149,2
-aguo201,2
-arey017,2
-blin207,2
-cli776,2
-cpuk542,2
-crob873,2
-dche610,2
-dma312,2
-fbab920,2
-gkar828,2
-hfen962,2
-hko828,2
-hsco139,2
-hye873,2
-hzha564,2
-ikop695,2
-iong692,2
-jche526,2
-jji887,2
-jliu243,2
-json007,2
-jwan553,2
-jwu807,2
-jxu384,2
-jzha975,2
-jzhu255,2
-jzhu986,2
-kfur006,2
-kmat038,2
-lao475,1
-ldao475,2
-lfu313,2
-lzen402,1
-mkan849,1
-mli779,1
-mwon892,2
-mzhu843,2
-ngoe369,2
-ngoel369,1
-nli763,1
-nli783,1
-nloh108,2
-nlum005,2
-nlum005,1
-nsun209,2
-ptan499,2
-qhe497,2
-qli914,2
-rlei932,1
-sbim777,1
-sjeb067,2
-skwe902,1
-slei065,2
-sliu482,1
-sten187,2
-swan387,2
-swou555,2
-tip421,2
-tli611,2
-txia202,2
-wany268,1
-wche650,2
-wlau390,1
-wshi995,2
-xcui868,1
-xli295,1
-xli444,1
-xli638,2
-xren451,1
-xsha028,2
-xyan289,2
-xyan859,1
-xzha593,2
-xzhu662,2
-ych872,2
-yche993,2
-yhu311,2
-yil125,2
-ylee942,2
-ylu306,2
-ynie053,1
-yren424,2
-yyan365,2
-yyu482,2
-yzhe906,2
-zche376,2
-zpan184,2
-zzha415,2
+UPI,Score,name
+agho149,2,Adityam Ghosh
+xcui868,1,Adrian Choi
+ache934,2,Alex Chen
+aguo201,2,Alex Guo
+zpan184,2,Alvin Pan
+skwe902,1,Andy Kweon
+adha594,1,Ankita Dharne
+arey017,2,Anna Reyes
+blin207,2,Brian Lin
+crob873,2,Chase Robertson
+xyan289,2,Davy Yang
+dma312,2,Dingyi Ma
+dche610,2,Dylan Chen
+fbab920,2,Fuki Babasaki
+gkar828,2,Geeth Lochana
+hzha564,2,Haolin Zhang
+ache706,2,Ho Yin Alvin Cheung
+hye873,2,Hongyou Ye
+cli776,2,Hongyu Li
+hko828,2,Hyunbin Ko
+ikop695,2,Ivan Koptev
+iong692,2,Ivan Ong
+jzha975,2,Jake Zhang
+cpuk542,2,Jason Puk
+jwan553,2,Jenny Wang
+jwu807,2,Jiafeng Wu
+json007,2,Jin Son
+jxu384,2,Jing Xu
+jzhu986,2,Jinglong Zhu
+jliu243,2,Jingwen Liu
+jzhu255,2,Junyao Zhu
+jche526,2,Junyu Chen
+jji887,2,Junzhe Ji
+kfur006,2,Kenichi Furushima
+kmat038,2,Kirk Matheson
+lzen402,1,LINGHAN ZENG
+rlei932,1,Lei Ren
+hsco139,2,Liam Scott-Russell
+lfu313,2,Linda Fu
+ldao475,2,Lucky Dao
+mwon892,2,Maaka Wong
+mkan849,1,Madawa Kannangara
+mzhu843,2,Maxwell Zhu
+mli779,1,Mengyu Li
+qhe497,2,Neil He
+nli763,2,Neil Li
+nloh108,2,Neville Loh
+nlum005,1,Nico Lumanglas
+nlum005,2,Nico Lumanglas
+nsun209,2,Ningning Sun
+ngoe369,2,Niti Goel Kalakoti
+wche650,2,Pam Che
+ptan499,2,Pei Tang
+qli914,2,Qinglong Li
+swou555,2,Sam Wouters
+sbim777,1,Sastra Bimantara
+sjeb067,2,Sheffin Ryna Jebaraja Kumar
+sliu482,1,Shusen Liu
+swan387,2,Sijie Wang
+slei065,2,Sizhe Lei
+sten187,2,Songyan Teng
+tli611,2,Tianyang Li
+txia202,2,Ting Xiang
+hfen962,2,Tony Feng
+tip421,2,Tsz Fung Ip
+wshi995,2,Wennan Shi
+wlau390,1,William Laughton
+xren451,1,Xiaobin Ren
+xli638,2,Xiaowei Li
+xyan859,1,Xingdong Yang
+xli295,1,Xintong Li
+xzhu662,2,Xinyu Zhu
+xzha593,2,Xizhe Zhang
+xsha028,2,Xuejun Shang
+xli444,1,Xueyao Li
+yhu311,2,Yidi Hu
+yzhe906,2,Yingtao Zheng
+ylu306,2,Yixiao Lu
+ynie053,1,Yiyu Nie
+ylee942,2,Yokiu Lee
+yyu482,2,Yong Yu
+yren424,2,Yuechen Ren
+yyan365,2,Yujie Yan
+yil125,2,Yuke Li
+yche993,2,Yun Chen
+ych872,2,Yuqi Chen
+wany268,1,Yuqi Wang
+zche376,2,Zhihong Chen
+zzha415,2,Zhiyao Zhang
