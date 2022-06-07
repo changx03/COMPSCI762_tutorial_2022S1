@@ -1,0 +1,490 @@
+\documentclass[11pt]{article}
+
+\usepackage[flushleft]{threeparttable}
+\usepackage[inline]{enumitem}
+\usepackage{algorithmic}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{colortbl}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{heuristica}
+\usepackage{hyperref}
+\usepackage{mathptmx}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\usepackage{siunitx}
+\usepackage{subcaption}
+\usepackage{svg}
+\usepackage{tabularx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\sloppy
+
+\begin{document}
+
+\title{COMPSCI 762 2022 S1 Week 12 Solutions}
+\author{Luke Chang}
+
+\maketitle
+
+\medskip
+
+\section{Question 1 -- Clustering}
+\label{q1}
+
+\begin{figure}[h]
+    \centering
+    \small
+    \caption{A data set has 8 instances, from A1 to A8. The Euclidean distances between every two instances are given as the following:}
+    \includegraphics[width=0.5\textwidth]{../group_work/k-mean_review_q1.png}
+    \label{fig1.1}
+\end{figure}
+
+Use the data in Figure~\ref{fig1.1} to answer the questions below:
+
+\subsection{}
+Suppose that the initial seeds (centers of each cluster) are \textbf{A1}, \textbf{A4} and \textbf{A7}. 
+Run the k-means algorithm for 1 epoch only. At the end of this epoch show the new clusters (i.e. the examples belonging to each cluster)
+
+\noindent
+\textbf{Answer:}
+
+\textbf{C1} is centred at \textbf{A1}, \textbf{C2} is centred at \textbf{A4}, and \textbf{C3} is centred at \textbf{A7}.\\
+For each point:\\
+\begin{itemize}
+    \item $\textbf{A1} \rightarrow \textbf{C1}$
+    \begin{table}[h!]
+        \scriptsize
+        \begin{tabular}{ccc}
+        Item & Centroid & Dist \\ \hline
+        A2   & A1       & $\sqrt{45}$ \\
+        A2   & A4       & $\sqrt{49}$ \\
+        A2   & A7       & $\sqrt{5}$
+        \end{tabular}
+    \end{table}
+    \item $\textbf{A2} \rightarrow \textbf{C3}$
+    \begin{table}[h!]
+        \scriptsize
+        \begin{tabular}{ccc}
+        Item & Centroid & Dist \\ \hline
+        A3   & A1       & $\sqrt{63}$ \\
+        A3   & A4       & $\sqrt{11}$ \\
+        A3   & A7       & $\sqrt{47}$
+        \end{tabular}
+    \end{table}
+    \item $\textbf{A3} \rightarrow \textbf{C2}$
+    \item $\textbf{A4} \rightarrow \textbf{C2}$
+\end{itemize}
+
+\begin{table}[h!]
+    \scriptsize
+    \begin{tabular}{ccc}
+    Item & Centroid & Dist \\ \hline
+    A5   & A1       & $\sqrt{41}$ \\
+    A5   & A4       & $\sqrt{2}$ \\
+    A5   & A7       & $\sqrt{21}$
+    \end{tabular}
+\end{table}
+\begin{itemize}
+    \item $\textbf{A5} \rightarrow \textbf{C2}$
+    \begin{table}[h!]
+        \scriptsize
+        \begin{tabular}{ccc}
+        Item & Centroid & Dist \\ \hline
+        A6   & A1       & $\sqrt{28}$ \\
+        A6   & A4       & $\sqrt{7}$ \\
+        A6   & A7       & $\sqrt{13}$
+        \end{tabular}
+    \end{table}
+    \item $\textbf{A6} \rightarrow \textbf{C2}$
+    \item $\textbf{A7} \rightarrow \textbf{C3}$
+    \begin{table}[h!]
+        \scriptsize
+        \begin{tabular}{ccc}
+        Item & Centroid & Dist \\ \hline
+        A8   & A1       & $\sqrt{6}$ \\
+        A8   & A4       & $\sqrt{5}$ \\
+        A8   & A7       & $\sqrt{53}$
+        \end{tabular}
+    \end{table}
+    \item $\textbf{A8} \rightarrow \textbf{C2}$
+\end{itemize}
+
+The new clusters: $C1=\{A1\},C2=\{A3, A4, A5, A6, A8\}, C3=\{A2, A7\}$
+
+\subsection{}
+Use single-linkage (MIN) agglomerative clustering to group the data. Show the dendrogram.
+
+\noindent
+\textbf{Answer:}
+
+\begin{table}[h!]
+    \centering
+    \scriptsize
+    \caption{Step 1}
+    \begin{tabular}{c|cccc|c|ccc}
+        & A1 & A2 & A3 & A4 & A5 & A6 & A7 & A8 \\ \hline
+    A1 & $0$  & $\sqrt{45}$ & $\sqrt{63}$ & $\sqrt{57}$ & $\sqrt{41}$ & $\sqrt{28}$ & $\sqrt{95}$ & $\sqrt{6}$ \\
+    A2 &    & $0$  & $\sqrt{55}$ & $\sqrt{49}$ & $\sqrt{35}$ & $\sqrt{11}$ & $\sqrt{5}$  & $\sqrt{25}$ \\
+    A3 &    &    & $0$  & $\sqrt{11}$ & $\sqrt{23}$ & $\sqrt{54}$ & $\sqrt{47}$ & $\sqrt{65}$ \\ \hline
+    A4 &    &    &    & $0$  & \textcolor{red}{$\sqrt{2}$} & $\sqrt{7}$  & $\sqrt{26}$ & $\sqrt{5}$  \\ \hline
+    A5 &    &    &    &    & $0$  & $\sqrt{5}$  & $\sqrt{21}$ & $\sqrt{35}$ \\
+    A6 &    &    &    &    &    & $0$  & $\sqrt{13}$ & $\sqrt{27}$ \\
+    A7 &    &    &    &    &    &    & $0$  & $\sqrt{53}$ \\
+    A8 &    &    &    &    &    &    &    & $0$ \\
+    \end{tabular}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \scriptsize
+    \caption{Step 1 -- Clusters}
+    \begin{tabular}{c|c|c}
+    Level & \# Clusters & Clusters \\ \hline
+    0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+    1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \textcolor{red}{\{A4, A5\}}, \{A6\}, \{A7\}, \{A8\}$\\
+    % 2     & 4           & \\
+    % 3     & 3           & \\
+    % 4     & 1           &   
+    \end{tabular}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \scriptsize
+    \caption{Step 2}
+    \begin{tabular}{c|cccccccc}
+       & A1 & A2 & A3 & A4 & A5 & A6 & A7 & A8 \\ \hline
+    A1 & $0$  & $\sqrt{45}$ & $\sqrt{63}$ & $\sqrt{57}$ & $\sqrt{41}$ & $\sqrt{28}$ & $\sqrt{95}$ & $\sqrt{6}$ \\
+    A2 &    & $0$  & $\sqrt{55}$ & $\sqrt{49}$ & $\sqrt{35}$ & $\sqrt{11}$ & \textcolor{red}{$\sqrt{5}$}  & $\sqrt{25}$ \\
+    A3 &    &    & $0$  & $\sqrt{11}$ & $\sqrt{23}$ & $\sqrt{54}$ & $\sqrt{47}$ & $\sqrt{65}$ \\ 
+    A4 &    &    &    & $0$  & \textcolor{gray}{$\sqrt{2}$} & $\sqrt{7}$  & $\sqrt{26}$ & \textcolor{red}{$\sqrt{5}$}  \\
+    A5 &    &    &    &    & $0$  & \textcolor{red}{$\sqrt{5}$}  & $\sqrt{21}$ & $\sqrt{35}$ \\
+    A6 &    &    &    &    &    & $0$  & $\sqrt{13}$ & $\sqrt{27}$ \\
+    A7 &    &    &    &    &    &    & $0$  & $\sqrt{53}$ \\
+    A8 &    &    &    &    &    &    &    & $0$ \\
+    \end{tabular}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \scriptsize
+    \caption{Step 2 -- Clusters}
+    \begin{tabular}{c|c|c}
+    Level & \# Clusters & Clusters \\ \hline
+    0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+    1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+    2     & 4           & $\{A1\}, \textcolor{red}{\{A2, A7\}}, \{A3\}, \textcolor{red}{\{A4, A5, A6,A8\}}$\\
+    % 3     & 3           & \\
+    % 4     & 1           &   
+    \end{tabular}
+\end{table}
+
+Step 3:
+
+\begin{table}[h!]
+    \centering
+    \scriptsize
+    \caption{Step 3}
+    \begin{tabular}{c|cccccccc}
+       & A1 & A2 & A3 & A4 & A5 & A6 & A7 & A8 \\ \hline
+    A1 & $0$  & $\sqrt{45}$ & $\sqrt{63}$ & $\sqrt{57}$ & $\sqrt{41}$ & $\sqrt{28}$ & $\sqrt{95}$ & \textcolor{red}{$\sqrt{6}$} \\
+    A2 &    & $0$  & $\sqrt{55}$ & $\sqrt{49}$ & $\sqrt{35}$ & $\sqrt{11}$ & \textcolor{gray}{$\sqrt{5}$}  & $\sqrt{25}$ \\
+    A3 &    &    & $0$  & $\sqrt{11}$ & $\sqrt{23}$ & $\sqrt{54}$ & $\sqrt{47}$ & $\sqrt{65}$ \\ 
+    A4 &    &    &    & $0$  & \textcolor{gray}{$\sqrt{2}$} & $\sqrt{7}$  & $\sqrt{26}$ & \textcolor{gray}{$\sqrt{5}$}  \\
+    A5 &    &    &    &    & $0$  & \textcolor{gray}{$\sqrt{5}$}  & $\sqrt{21}$ & $\sqrt{35}$ \\
+    A6 &    &    &    &    &    & $0$  & $\sqrt{13}$ & $\sqrt{27}$ \\
+    A7 &    &    &    &    &    &    & $0$  & $\sqrt{53}$ \\
+    A8 &    &    &    &    &    &    &    & $0$ \\
+    \end{tabular}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \scriptsize
+    \caption{Step 3 -- Clusters}
+    \begin{tabular}{c|c|c}
+    Level & \# Clusters & Clusters \\ \hline
+    0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+    1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+    2     & 4           & $\{A1\}, \{A2, A7\}, \{A3\}, \{A4, A5, A6,A8\}$\\
+    3     & 3           & $\textcolor{red}{\{A1, A4, A5, A6,A8\}}, \{A2, A7\}, \{A3\}$\\
+    % 4     & 1           &   
+    \end{tabular}
+\end{table}
+
+Step 4:
+
+\begin{table}[h!]
+    \centering
+    \scriptsize
+    \caption{Step 4}
+    \begin{tabular}{c|cccccccc}
+       & A1 & A2 & A3 & A4 & A5 & A6 & A7 & A8 \\ \hline
+    A1 & $0$  & $\sqrt{45}$ & $\sqrt{63}$ & $\sqrt{57}$ & $\sqrt{41}$ & $\sqrt{28}$ & $\sqrt{95}$ & \textcolor{gray}{$\sqrt{6}$} \\
+    A2 &    & $0$  & $\sqrt{55}$ & $\sqrt{49}$ & $\sqrt{35}$ & \textcolor{red}{$\sqrt{11}$} & \textcolor{gray}{$\sqrt{5}$}  & $\sqrt{25}$ \\
+    A3 &    &    & $0$  & \textcolor{red}{$\sqrt{11}$} & $\sqrt{23}$ & $\sqrt{54}$ & $\sqrt{47}$ & $\sqrt{65}$ \\ 
+    A4 &    &    &    & $0$  & \textcolor{gray}{$\sqrt{2}$} & \textcolor{blue}{$\sqrt{7}$}  & $\sqrt{26}$ & \textcolor{gray}{$\sqrt{5}$}  \\
+    A5 &    &    &    &    & $0$  & \textcolor{gray}{$\sqrt{5}$}  & $\sqrt{21}$ & $\sqrt{35}$ \\
+    A6 &    &    &    &    &    & $0$  & $\sqrt{13}$ & $\sqrt{27}$ \\
+    A7 &    &    &    &    &    &    & $0$  & $\sqrt{53}$ \\
+    A8 &    &    &    &    &    &    &    & $0$ \\
+    \end{tabular}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \scriptsize
+    \caption{Step 4 -- Clusters. Note that A4 and A6 are already in one cluster.}
+    \begin{tabular}{c|c|c}
+    Level & \# Clusters & Clusters \\ \hline
+    0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+    1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+    2     & 4           & $\{A1\}, \{A2, A7\}, \{A3\}, \{A4, A5, A6,A8\}$\\
+    3     & 3           & \textcolor{blue}{$\{A1, A4, A5, A6,A8\}, \{A2, A7\}, \{A3\}$}\\
+    4     & 1           & $\{A1, A2, A3, A4, A5, A6, A7, A8\}$
+    \end{tabular}
+\end{table}
+
+
+\begin{figure}[h!]
+    \centering
+    \scriptsize
+    \includegraphics[width=0.45\textwidth]{dendrogram.png}
+    \caption{Step 5 -- Dendrogram: Make sure you choose the correct order to start with. Use the sequence from the second last level;}
+\end{figure}
+
+\newpage
+\section{Question 2 -- Ooutlier/Anomaly Detection}
+\label{q2}
+
+\subsection{}
+What are the three types of anomaly? Give an example for each type.
+
+\noindent
+\textbf{Answer:}
+
+\begin{itemize}
+    \item \textbf{Global outlier (Point anomaly):} deviates significantly from the rest of the data set. 
+    The simplest type of outliers.
+    \item \textbf{Contextual outlier (Conditional outlier):} deviates significantly with respect to a specific context of the object.
+        \begin{itemize}
+            \item \textbf{Contextual attributes:} define the object’s context.
+            \item \textbf{Behavioral attributes:} define the object’s characteristics, and are used to evaluate
+            whether the object is an outlier in the context.\\
+            \textbf{For example:}\\
+            A temperature sensor measures 4$^{\circ}$C in May. It is a perfectly normal reading in Wellington, but it might be an outlier if the location is New York.
+            The location and the date are \textbf{contextual attributes}, and the temperature is a \textbf{behavioral attribute}.
+        
+    \end{itemize}
+    \item \textbf{Collective outliers:} the objects as a whole deviate significantly from the entire data set.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{outlier_examples.pdf}
+    \caption{Types of outliers}
+    \label{fig.outliers}
+\end{figure}
+
+Examples:
+\begin{itemize}
+    \item Fig.~\ref{fig.outliers} left: Global outliers
+    \item Fig.~\ref{fig.outliers} middle: Contextual outliers -- Given the dataset has two clusters, each one has a moon shape.
+    \item Fig.~\ref{fig.outliers} rright: Blue points are collective outliers because the density of those points is much higher than the rest.
+\end{itemize}
+
+\pagebreak
+\subsection{}
+You are given the following list of 2D data points:
+\[[1; 1]; [1; 2]; [2; 2]; [2; 1]; [3; 3]; [2; 5]; [2; 3]\]
+If you had to select one point to be anomalous, how to use Manhattan distance to 
+determine the outlier. Explain the anomaly detection technique.
+
+\noindent
+\textbf{Answer:}
+
+There are multiple ways to solve this problem. Let's use \textbf{distance-based outlier detection}.
+
+\begin{table}[h!]
+    \scriptsize
+    \centering
+    \begin{tabular}{c|ccccccc}
+                 & \textbf{1,1} & \textbf{1,2} & \textbf{2,2} & \textbf{2,1} & \textbf{3,3} & \textbf{2,5} & \textbf{2,3} \\ \hline
+    \textbf{1,1} & 0            & 1            & 2            & 1            & 4            & 5            & 3            \\
+    \textbf{1,2} & 1            & 0            & 1            & 2            & 3            & 4            & 2            \\
+    \textbf{2,2} & 2            & 1            & 0            & 1            & 2            & 3            & 1            \\
+    \textbf{2,1} & 1            & 2            & 1            & 0            & 3            & 4            & 2            \\
+    \textbf{3,3} & 4            & 3            & 2            & 3            & 0            & 3            & 1            \\
+    \textbf{2,5} & 5            & 4            & 3            & 4            & 3            & 0            & 2            \\
+    \textbf{2,3} & 3            & 2            & 1            & 2            & 1            & 2            & 0           
+    \end{tabular}
+    \caption{Manhattan Distance Matrix}
+\end{table}
+
+\[
+    \frac{|\{o' | \text{dist}(o, o') \le r\}|}{|D|} \le \pi
+\]
+where $|D|$ is the {\em cardinality} of the set $D$.\\
+\hspace*{1em}
+
+We need to define the hyperparameters: $r$ and $\pi$.
+
+The number of data points, $|D|$, is 7.\\
+Let $r=2$,
+
+\begin{table}[h!]
+    \scriptsize
+    \centering
+    \begin{tabular}{c|c|c}
+                    &  \textbf{\# of objects within $r$} & \textbf{Divide by $|D|$}\\ \hline
+    \textbf{1,1} &  3 & 0.43 \\
+    \textbf{1,2} &  4 & 0.57 \\
+    \textbf{2,2} &  5 & 0.71 \\
+    \textbf{2,1} &  4 & 0.57 \\
+    \textbf{3,3} &  2 & 0.29 \\
+    \rowcolor[HTML]{34CDF9}\textbf{2,5} &  1 & 0.14 \\
+    \textbf{2,3} &  5 & 0.71   
+    \end{tabular}
+    \caption{The \# of neighbours within $r$}
+\end{table}
+
+If we select only one point as an outlier, we can set $\pi$ to any value between $0.14$ and $0.29$, e.g. $0.15$.\\
+Therefore, we identify $[2;5]$ is an outlier.
+
+\pagebreak
+\subsection{}
+Consider a set of points (0,0), (1,0), (0,1), (3,0). 
+Calculate the {\em Local Outlier Factor} (LOF) score for the points using Manhattan distance and $k$ is 2.
+
+\noindent
+\textbf{Answer:}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.3\textwidth]{outlier_lof.pdf}
+\end{figure}
+
+\begin{table}[h!]
+    \scriptsize
+    \centering
+    \begin{tabular}{c|cccc}
+                 & \textbf{a (0,0)} & \textbf{b (1,0)} & \textbf{c (0,1)} & \textbf{d (3,0)} \\ \hline
+    \textbf{a (0,0)} & 0            & 1            & 1            & 3            \\
+    \textbf{b (1,0)} & 1            & 0            & 2            & 2            \\
+    \textbf{c (0,1)} & 1            & 2            & 0            & 4            \\
+    \textbf{d (3,0)} & 3            & 2            & 4            & 0           
+    \end{tabular}
+    \caption{Manhattan distance matrix}
+\end{table}
+
+\begin{table}[h!]
+    \scriptsize
+    \centering
+    \begin{tabular}{c|cc}
+                 & $\text{dist}_2(o)$ & $N_2(o)$ \\ \hline
+    \textbf{a (0,0)} & 1 & 2 \\
+    \textbf{b (1,0)} & 2 & \textcolor{red}{3} \\
+    \textbf{c (0,1)} & 2 & 2 \\
+    \textbf{d (3,0)} & 3 & 2  
+    \end{tabular}
+    \caption{Distance between data point $o$ and its k-th nearest neighbour ($k=2$)}
+\end{table}
+We denote the set of $k$-nearest neighbours as $N_k(o)$:
+\[
+    N_k(o) = \{o' | o' \in D, \text{dist}(o, o') \le \text{dist}_k(o)\}
+\]
+\textbf{Note:} $|N_k(o)|$ may contain more than $k$ objects, because objects may have same distance.
+
+Let $o'$ be a neighbour of $o$, to avoid $\text{dist}(o, o')$ is too small, we compute the reachability distance from $o$ to $o'$:
+\[
+    \text{reachdist}_k(o' \leftarrow o) = \max\{\text{dist}_k(o), \text{dist}(o, o')\}
+\]
+
+Note that reachability distance is not symmetric, thus 
+\[
+    \text{reachdist}_k(o \leftarrow o') \neq \text{reachdist}_k(o' \leftarrow o)
+\]
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.33\textwidth]{reachdist_ab.pdf}
+    \caption{$\text{reachdist}_2(b \leftarrow a) \neq \text{reachdist}_2(a \leftarrow b)$}
+\end{figure}
+
+\begin{equation*}
+    \begin{array}{rlll}
+        \rowcolor[HTML]{34CDF9} \text{reachdist}_2(b \leftarrow a) & = \max\{\text{dist}_2(a), \text{dist}(a, b)\} & = \max\{1, 1\} & = 1\\
+        \text{reachdist}_2(c \leftarrow a) & = \max\{\text{dist}_2(a), \text{dist}(a, c)\} & = \max\{1, 1\} & = 1\\
+        \text{reachdist}_2(d \leftarrow a) & = \max\{\text{dist}_2(a), \text{dist}(a, d)\} & = \max\{1, 3\} & = 3\\
+        \rowcolor[HTML]{34CDF9} \text{reachdist}_2(a \leftarrow b) & = \max\{\text{dist}_2(b), \text{dist}(b, a)\} & = \max\{2, 1\} & = 2\\
+        \text{reachdist}_2(c \leftarrow b) & = \max\{\text{dist}_2(b), \text{dist}(b, c)\} & = \max\{2, 2\} & = 2\\
+        \text{reachdist}_2(d \leftarrow b) & = \max\{\text{dist}_2(b), \text{dist}(b, d)\} & = \max\{2, 2\} & = 2\\
+        \text{reachdist}_2(a \leftarrow c) & = \max\{\text{dist}_2(c), \text{dist}(c, a)\} & = \max\{2, 1\} & = 2\\
+        \text{reachdist}_2(b \leftarrow c) & = \max\{\text{dist}_2(c), \text{dist}(c, b)\} & = \max\{2, 2\} & = 2\\
+        \text{reachdist}_2(d \leftarrow c) & = \max\{\text{dist}_2(c), \text{dist}(c, d)\} & = \max\{2, 4\} & = 4\\
+        \text{reachdist}_2(a \leftarrow d) & = \max\{\text{dist}_2(d), \text{dist}(d, a)\} & = \max\{3, 3\} & = 3\\
+        \text{reachdist}_2(b \leftarrow d) & = \max\{\text{dist}_2(d), \text{dist}(d, b)\} & = \max\{3, 2\} & = 3\\
+        \text{reachdist}_2(c \leftarrow d) & = \max\{\text{dist}_2(d), \text{dist}(d, c)\} & = \max\{3, 4\} & = 4\\
+    \end{array}
+\end{equation*}
+
+Note that,
+\[
+    \text{reachdist}_k(o \leftarrow o') \neq \text{reachdist}_k(o' \leftarrow o)
+\]
+
+The {\em Local Reachability Density} (LRD) of an object $o$ is defined as
+\[
+    \text{lrd}_k(o) = \frac{|N_k(o)|}{\sum_{o' \in N_k(o)} \text{reachdist}_k(o \leftarrow o')}
+    \]
+    
+\begin{equation*}
+    \begin{array}{rlll}
+        \text{lrd}_2(a) & = |N_2(a)| / (\text{reachdist}_2(a \leftarrow b) + \text{reachdist}_2(a \leftarrow c))                                      & = 2 / (2 + 2) & = 0.5\\
+        \text{lrd}_2(b) & = |N_2(b)| / (\text{reachdist}_2(b \leftarrow a) + \text{reachdist}_2(b \leftarrow c) + \text{reachdist}_2(b \leftarrow d)) & = 3 / (1+2+3) & = 0.5\\
+        \text{lrd}_2(c) & = |N_2(c)| / (\text{reachdist}_2(c \leftarrow a) + \text{reachdist}_2(c \leftarrow b))                                      & = 2 / (1 + 2) & = 0.667\\
+        \text{lrd}_2(d) & = |N_2(d)| / (\text{reachdist}_2(d \leftarrow a) + \text{reachdist}_2(d \leftarrow b))                                      & = 2 / (3 + 2) & = 0.4\\
+    \end{array}
+\end{equation*}
+
+The {\em Local Outlier Factor} (LOF) of an object $o$ is
+\[
+    \text{LOF}_k(o) = \frac{\sum_{o' \in N_k(o)} \frac{\text{lrd}_k(o')}{\text{lrd}_k(o)}}{|N_k(o)|} 
+    = \frac{\sum_{o' \in N_k(o)} \text{lrd}_k(o')}{|N_k(o)| \cdot \text{lrd}_k(o)}
+\]
+    
+\begin{equation*}
+    \begin{array}{rlll}
+        \text{LOF}_2(a) & = (\text{lrd}_2(b) + \text{lrd}_2(c)) / (|N_2(a)| \cdot \text{lrd}_2(a)) & = (0.5+0.667) / (2\times 0.5)& = 1.167\\
+        \text{LOF}_2(b) & = (\text{lrd}_2(a) + \text{lrd}_2(c) + \text{lrd}_2(d)) / (|N_2(b)| \cdot \text{lrd}_2(b))  & = (0.5+0.667+0.4) / (3\times 0.5)& \approx 1.045\\
+        \text{LOF}_2(c) & = (\text{lrd}_2(a) + \text{lrd}_2(b)) / (|N_2(c)| \cdot \text{lrd}_2(c))  & = (0.5+0.5) / (2\times 0.667)& \approx 0.750\\
+        \text{LOF}_2(d) & = (\text{lrd}_2(a) + \text{lrd}_2(b)) / (|N_2(d)| \cdot \text{lrd}_2(d))  & = (0.5+0.5) / (2\times 0.4)& = 1.25\\
+    \end{array}
+\end{equation*}
+
+LOF is a relative value. We should not compare a LOF from one dataset with other reading from different datasets.
+
+The question does not ask for outlier. There is only 4 data points. If we remove 1 point, we will remove $25\%$ of the data. I do not determine the outlier here.
+\end{document}
